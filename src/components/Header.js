@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ReactComponent as Burger } from "./burger.svg";
+import { ReactComponent as Burger } from "../images/burger.svg";
 import { Link } from "react-router-dom";
 
 export default function Header() {
