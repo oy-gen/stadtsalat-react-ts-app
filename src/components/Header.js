@@ -1,19 +1,20 @@
 import styled from "styled-components";
 import { ReactComponent as Burger } from "./burger.svg";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <HeaderBar>
+    <NavBar>
       <Burger height="60px" />
       <MenueWrapper>
-        <h5>PAGE 1</h5>
-        <h5>PAGE 2</h5>
-        <h5>PAGE 3</h5>
+        <Link to="./page-one">PAGE ONE</Link>
+        <Link to="./page-two">PAGE TWO</Link>
       </MenueWrapper>
-    </HeaderBar>
+    </NavBar>
   );
 }
-const HeaderBar = styled.header`
+
+const NavBar = styled.header`
   display: flex;
   align-items: center;
   padding: 0 80px;
@@ -29,5 +30,3 @@ const MenueWrapper = styled.div`
   display: flex;
   gap: 40px;
 `;
-
-// const Logo = styled.img``
