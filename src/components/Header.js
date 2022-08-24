@@ -17,13 +17,15 @@ export default function Header() {
 const NavBar = styled.header`
   display: flex;
   align-items: center;
+  top: 0;
   padding: 0 80px;
   position: fixed;
-  height: 100px;
+  height: 120px;
   width: 100%;
-  background-color: aliceblue;
+  background-color: oldlace;
   justify-content: space-between;
   z-index: 1;
+  box-shadow: 0px 0px 28px 11px rgba(0, 0, 0, 0.1);
 `;
 
 const MenueWrapper = styled.div`
