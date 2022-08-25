@@ -12,11 +12,10 @@ import PageTwo from "./routes/page-two";
 const container = document.getElementById("root");
 const root = createRoot(container);
 
-
 root.render(
   <React.StrictMode>
-    <div id="modal" />
     <Provider store={store}>
+      <div id="modal" />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />

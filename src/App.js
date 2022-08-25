@@ -1,10 +1,10 @@
 import React from "react";
-import "./App.css";
 import Nav from "./components/Nav";
 import { useEffect, useState } from "react";
 import ProductCard from "./components/ProductCard";
-
+import { Counter } from "./features/counter/Counter";
 import styled from "styled-components";
+import { createStore } from "react-redux";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -20,20 +20,22 @@ function App() {
           p.productTags.includes("product.salad") ||
           p.productTags.includes("product.bowl")
       );
-      const products = realProducts.map((product) => ({
+      const adjustedProducts = realProducts.map((product) => ({
         ...product,
         rating: Math.floor(Math.random() * 6), // -------------------------------  Hacking "rating-key" into API-Data because API does not have it
       }));
-      setProducts(products);
-      console.log(products);
+      setProducts(adjustedProducts);
     }
     fetchData();
   }, []);
+
+  console.log(products);
 
   return (
     <>
       <Nav />
       <MainContainer>
+        <Counter />
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
