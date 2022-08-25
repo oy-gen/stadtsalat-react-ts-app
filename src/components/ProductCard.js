@@ -3,9 +3,11 @@ import { ReactComponent as Star } from "../images/star.svg";
 import { ReactComponent as Like } from "../images/like.svg";
 import { ReactComponent as Location } from "../images/location.svg";
 import { useState } from "react";
+import Modal from "./Modal";
 
 export default function ProductCard({ product }) {
-  const [bookmarked, setBookmarked] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <>
@@ -24,19 +26,24 @@ export default function ProductCard({ product }) {
         </DetailWrapper>
         <DetailWrapper>
           <Tag active={product.tags.includes("vegan")}>Vegan</Tag>
-          <Tag active={product.tags.includes("glutenfree")}>Glutenfree</Tag>
+          <Tag active={product.tags.includes("vegetarian")}>Vegetarian</Tag>
           <Tag active={product.tags.includes("lactosefree")}>Lactosefree</Tag>
           <Tag active={product.tags.includes("glutenfree")}>Glutenfree</Tag>
         </DetailWrapper>
         <IconWrapper>
-          <Button>
+          <Button onClick={() => setShowModal(!showModal)}>
             <Location />
           </Button>
-          <Button onClick={() => setBookmarked(!bookmarked)}>
-            <Like fill={bookmarked ? "grey" : "none"} />
+          <Button onClick={() => setLiked(!liked)}>
+            <Like fill={liked ? "grey" : "none"} />
           </Button>
         </IconWrapper>
       </StyledCard>
+      <Modal onClick={() => setShowModal(false)} showModal={showModal}>
+        <h2>This is a Modal</h2>
+        <Message>{product.description}</Message>
+        <button onClick={() => setShowModal(false)}>Close Modal</button>
+      </Modal>
     </>
   );
 }
@@ -44,7 +51,6 @@ export default function ProductCard({ product }) {
 const StyledCard = styled.div`
   display: grid;
   grid-template-columns: 5fr 3fr 1fr;
-
   border-radius: 10px;
   background-color: hsl(0, 0%, 94%);
   box-shadow: 0px 0px 28px 11px rgba(0, 0, 0, 0.2);
@@ -59,6 +65,7 @@ const DetailWrapper = styled.div`
   display: flex;
   gap: 5px;
 `;
+
 const Tag = styled.p`
   font-weight: 700;
   padding: 5px 10px;
@@ -83,10 +90,15 @@ const Button = styled.button`
   padding: 10px;
 `;
 
-
 const Image = styled.img`
-grid-column: 2/3;
-grid-row: 1/4;
-width: 200px;
-`
+  grid-column: 2/3;
+  grid-row: 1/4;
+  width: 200px;
+`;
 
+const Message = styled.p`
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 1rem 1rem;
+  text-align: center;
+`;
