@@ -12,6 +12,7 @@ import PageTwo from "./routes/page-two";
 const container = document.getElementById("root");
 const root = createRoot(container);
 
+
 root.render(
   <React.StrictMode>
     <div id="modal" />

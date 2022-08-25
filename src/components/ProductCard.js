@@ -48,7 +48,7 @@ const StyledCard = styled.div`
   border-radius: 10px;
   background-color: hsl(0, 0%, 94%);
   box-shadow: 0px 0px 28px 11px rgba(0, 0, 0, 0.2);
-  margin: 40px;
+  margin: 20px;
   padding: 40px;
 `;
 

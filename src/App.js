@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
-import Header from "./components/Header";
+import Nav from "./components/Nav";
 import { useEffect, useState } from "react";
 import ProductCard from "./components/ProductCard";
-import getRandomRating from "./hooks/getRandomRating";
+
 import styled from "styled-components";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
       );
       const products = realProducts.map((product) => ({
         ...product,
-        rating: getRandomRating(), // -------------------------------  Hacking "rating-key" into API-Data because API does not have it
+        rating: Math.floor(Math.random() * 6), // -------------------------------  Hacking "rating-key" into API-Data because API does not have it
       }));
       setProducts(products);
       console.log(products);
@@ -32,18 +32,19 @@ function App() {
 
   return (
     <>
-      <Header />
-      <CardContainer>
+      <Nav />
+      <MainContainer>
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
-      </CardContainer>
+      </MainContainer>
     </>
   );
 }
 
-const CardContainer = styled.section`
-  margin-top: 150px;
+const MainContainer = styled.section`
+  max-width: 1200px;
+  margin: 180px auto;
 `;
 
 export default App;
