@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { ReactComponent as Star } from "../images/star.svg";
+import Tags from "./Tags";
 import { ReactComponent as Like } from "../images/like.svg";
 import { ReactComponent as Location } from "../images/location.svg";
 import { useState } from "react";
 import Modal from "./Modal";
+import Stars from "./Stars";
 
 export default function ProductCard({ product }) {
   const [liked, setLiked] = useState(false);
@@ -18,17 +19,10 @@ export default function ProductCard({ product }) {
           alt={product.name}
         />
         <DetailWrapper>
-          <Star fill={product.rating > 0 ? "gold" : "lightgray"} />
-          <Star fill={product.rating > 1 ? "gold" : "lightgray"} />
-          <Star fill={product.rating > 2 ? "gold" : "lightgray"} />
-          <Star fill={product.rating > 3 ? "gold" : "lightgray"} />
-          <Star fill={product.rating > 4 ? "gold" : "lightgray"} />
+          <Stars rating={product.rating} />
         </DetailWrapper>
         <DetailWrapper>
-          <Tag active={product.tags.includes("vegan")}>Vegan</Tag>
-          <Tag active={product.tags.includes("vegetarian")}>Vegetarian</Tag>
-          <Tag active={product.tags.includes("lactosefree")}>Lactosefree</Tag>
-          <Tag active={product.tags.includes("glutenfree")}>Glutenfree</Tag>
+          <Tags tags={product.tags} />
         </DetailWrapper>
         <IconWrapper>
           <Button onClick={() => setShowModal(!showModal)}>
@@ -40,7 +34,7 @@ export default function ProductCard({ product }) {
         </IconWrapper>
       </StyledCard>
       <Modal onClick={() => setShowModal(false)} showModal={showModal}>
-        <h2>This is a Modal</h2>
+        <h2>{product.name}</h2>
         <Message>{product.description}</Message>
         <button onClick={() => setShowModal(false)}>Close Modal</button>
       </Modal>
@@ -64,15 +58,6 @@ const DetailWrapper = styled.div`
   align-items: center;
   display: flex;
   gap: 5px;
-`;
-
-const Tag = styled.p`
-  font-weight: 700;
-  padding: 5px 10px;
-  background-color: ${(props) =>
-    props.active ? "mediumseagreen" : "darkgrey"};
-  color: ${(props) => (props.active ? "white" : "lightgrey")};
-  text-decoration: ${(props) => (props.active ? "" : "line-through")};
 `;
 
 const IconWrapper = styled.div`
