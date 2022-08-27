@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setProducts } from "./productSlice";
+import { addProducts } from "./dataSlice";
 
 export const fetchDataThunk = createAsyncThunk(
   "fetchProducts",
-  async (_, { dispatch }) => {
+  async (_, dispatch ) => {
     fetch("https://api.stadtsalat.de/shop/grosse-theaterstrasse-store")
       .then((response) => response.json())
-      .then((data) => dispatch(setProducts(data)));
+      .then((data) => dispatch(addProducts(data)));
     // const realProducts = data.products.filter(
     //   (p) =>
     //     p.productTags.includes("product.salad") ||

@@ -5,21 +5,13 @@ import { ReactComponent as Location } from "../images/location.svg";
 import { useState } from "react";
 import Modal from "./Modal";
 import Stars from "./Stars";
-import {
-  toggleLike,
-  selectLikes,
-} from "../features/counter/counterSlice";
+import { toggleLike, showLikes } from "../app/dataSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function ProductCard({ product }) {
-  const [isLiked, setIsLiked] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const likes = useSelector(selectLikes);
+  const isLiked = useSelector(showLikes).includes(product.id);
   const dispatch = useDispatch();
-  console.log(likes);
-
-
-
 
   return (
     <>
@@ -41,8 +33,7 @@ export default function ProductCard({ product }) {
           </Button>
           <Button
             onClick={() => {
-              setIsLiked(!isLiked);
-              dispatch(toggleLike(product.id))
+              dispatch(toggleLike(product.id));
             }}
           >
             <Like fill={isLiked ? "grey" : "none"} />
