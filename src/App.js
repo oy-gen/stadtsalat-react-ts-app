@@ -2,12 +2,19 @@ import React from "react";
 import Nav from "./components/Nav";
 import { useEffect, useState } from "react";
 import ProductCard from "./components/ProductCard";
-import { Counter } from "./features/counter/Counter";
+import { Counter } from "./components/Counter";
 import styled from "styled-components";
-import { createStore } from "react-redux";
+import { useDispatch, useStore } from "react-redux";
+import fetchDataThunk from "./features/products/fetchDataThunk";
 
 function App() {
+  const store = useStore();
   const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchDataThunk());
+  }, [dispatch]);
 
   useEffect(() => {
     async function fetchData() {
@@ -30,6 +37,7 @@ function App() {
   }, []);
 
   console.log(products);
+  console.log("STORE", store.counter);
 
   return (
     <>

@@ -5,7 +5,7 @@ import {
   increment,
   incrementAsync,
   selectCount,
-} from "./counterSlice";
+} from "../features/counter/counterSlice";
 
 export function Counter() {
   const count = useSelector(selectCount);
