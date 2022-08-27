@@ -4,17 +4,15 @@ import { useEffect, useState } from "react";
 import ProductCard from "./components/ProductCard";
 import { Counter } from "./components/Counter";
 import styled from "styled-components";
-import { useDispatch, useStore } from "react-redux";
-import fetchDataThunk from "./features/products/fetchDataThunk";
+// import { useDispatch, useSelector } from "react-redux";
+// import {setUpProducts, selectProducts} from '../src/features/products/productSlice'
+// import fetchDataThunk from "./features/products/fetchDataThunk";
+// import { createStoreHook } from "react-redux";
 
 function App() {
-  const store = useStore();
+  // const storeProducts = useSelector(selectProducts);
   const [products, setProducts] = useState([]);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchDataThunk());
-  }, [dispatch]);
+  //  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchData() {
@@ -32,18 +30,19 @@ function App() {
         rating: Math.floor(Math.random() * 6), // -------------------------------  Hacking "rating-key" into API-Data because API does not have it
       }));
       setProducts(adjustedProducts);
+      // dispatch(setUpProducts(adjustedProducts));
     }
     fetchData();
   }, []);
 
   console.log(products);
-  console.log("STORE", store.counter);
+  // console.log("STORE", storeProducts);
 
   return (
     <>
       <Nav />
       <MainContainer>
-        <Counter />
+        <Counter products={products} />
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

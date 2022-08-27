@@ -5,10 +5,21 @@ import { ReactComponent as Location } from "../images/location.svg";
 import { useState } from "react";
 import Modal from "./Modal";
 import Stars from "./Stars";
+import {
+  toggleLike,
+  selectLikes,
+} from "../features/counter/counterSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function ProductCard({ product }) {
-  const [liked, setLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const likes = useSelector(selectLikes);
+  const dispatch = useDispatch();
+  console.log(likes);
+
+
+
 
   return (
     <>
@@ -28,12 +39,17 @@ export default function ProductCard({ product }) {
           <Button onClick={() => setShowModal(!showModal)}>
             <Location />
           </Button>
-          <Button onClick={() => setLiked(!liked)}>
-            <Like fill={liked ? "grey" : "none"} />
+          <Button
+            onClick={() => {
+              setIsLiked(!isLiked);
+              dispatch(toggleLike(product.id))
+            }}
+          >
+            <Like fill={isLiked ? "grey" : "none"} />
           </Button>
         </IconWrapper>
       </StyledCard>
-      <Modal onClick={() => setShowModal(false)} showModal={showModal}>
+      <Modal showModal={showModal}>
         <h2>{product.name}</h2>
         <Message>{product.description}</Message>
         <button onClick={() => setShowModal(false)}>Close Modal</button>

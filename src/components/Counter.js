@@ -1,13 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import {
-  decrement,
-  increment,
-  incrementAsync,
-  selectCount,
-} from "../features/counter/counterSlice";
+import { decrement, increment, addProducts, selectCount } from "../features/counter/counterSlice";
 
-export function Counter() {
+export function Counter({ products }) {
   const count = useSelector(selectCount);
   const dispatch = useDispatch();
 
@@ -29,8 +24,8 @@ export function Counter() {
         </Button>
       </Row>
       <Row>
-        <Button onClick={() => dispatch(incrementAsync(1))}>
-          Add Async + 1
+        <Button onClick={() => dispatch(addProducts(products))}>
+          Add products
         </Button>
       </Row>
     </div>

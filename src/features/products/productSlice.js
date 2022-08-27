@@ -1,34 +1,30 @@
-import { , createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import fetchDataThunk from "./fetchDataThunk";
-import setDataReducer from "./setDataReducer";
+import { createSlice } from "@reduxjs/toolkit";
+
+import setProductsReducer from "./setProductsReducer";
 
 const initialState = {
-  loading:false,
   products: [],
-  error:'',
+  likes: [],
 };
 
-export const incrementAsync = createAsyncThunk(
-  "products/fetchProducts2",
-  async (data) => {
-    const response = await fetchDataThunk(data);
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
-  }
-);
-
-
-
-
 export const productSlice = createSlice({
-  name: "products",
+  name: "Data",
   initialState,
   reducers: {
-    setProducts: setDataReducer,
+    setUpProducts: setProductsReducer,
   },
 });
 
-export const setProducts = productSlice.actions;
+export const setUpProducts = productSlice.actions;
 export const selectProducts = (state) => state.products;
 
 export default productSlice.reducer;
+
+// export const incrementAsync = createAsyncThunk(
+//   "fetchProducts2",
+//   async (data) => {
+//     const response = fetchDataThunk(data);
+//     // The value we return becomes the `fulfilled` action payload
+//     return response.data;
+//   }
+// );
