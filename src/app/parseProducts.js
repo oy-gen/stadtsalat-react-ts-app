@@ -23,7 +23,6 @@ export function paginateParsedProducts(data) {
     }
     return result;
   }
-
   console.log(sliceIntoChunks(totalProducts, productsPerPage));
 }
 

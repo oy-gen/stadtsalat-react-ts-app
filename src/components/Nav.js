@@ -1,14 +1,16 @@
 import styled from "styled-components";
-import { ReactComponent as Burger } from "../images/burger.svg";
+
 import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
     <NavBar>
-      <Burger height="60px" />
+      <Link to="/">
+        <Logo src="https://static.stadtsalat.de/shop/image/configurator" />
+      </Link>
       <MenueWrapper>
-        <Link to="./page-one">PAGE ONE</Link>
-        <Link to="./page-two">PAGE TWO</Link>
+        <Link to="/page-one">PAGE ONE</Link>
+        <Link to="/page-two">PAGE TWO</Link>
       </MenueWrapper>
     </NavBar>
   );
@@ -31,4 +33,9 @@ const NavBar = styled.header`
 const MenueWrapper = styled.div`
   display: flex;
   gap: 40px;
+`;
+
+const Logo = styled.img`
+  height: 80px;
+  width: 80px; ;
 `;

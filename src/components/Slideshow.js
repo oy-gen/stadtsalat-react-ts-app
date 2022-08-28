@@ -25,7 +25,7 @@ export default function SlideShow({ images }) {
         <Arrow
           className="right"
           onClick={goToNext}
-          disabled={currentIndex === images.length}
+          disabled={currentIndex === images.length - 1}
         >
           🡪
         </Arrow>
@@ -35,10 +35,11 @@ export default function SlideShow({ images }) {
           }}
         />
         <DotWrapper>
-          {images.map((image) => (
+          {images.map((image, index) => (
             <Dot
-              key={image.index}
-              current={image.index === currentIndex ? "white" : "black"}
+              key={index}
+              currentPic={index === currentIndex}
+              onClick={() => setCurrentIndex(index)}
             />
           ))}
         </DotWrapper>
@@ -69,12 +70,13 @@ const DotWrapper = styled.div`
 `;
 
 const Dot = styled.button`
+  border-style: none;
   border-radius: 100%;
   width: 20px;
   height: 20px;
-  background-color: ${(props) => props.current};
+  background-color: ${(props) => (props.currentPic ? "lightgrey" : "grey")};
   :hover {
-    background-color: lightgray;
+    background-color: green;
   }
 `;
 
@@ -83,8 +85,7 @@ const Arrow = styled.button`
   color: black;
   position: absolute;
   top: 45%;
-  z-index: 3;
-
+  z-index: 1;
   &.left {
     left: 5px;
   }

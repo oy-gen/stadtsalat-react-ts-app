@@ -5,8 +5,7 @@ import ProductCard from "./components/ProductCard";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { addProducts, showProducts } from "./app/dataSlice";
-import fetchData from "./app/fetchData";
-import { parseProducts, paginateParsedProducts } from "./app/parseProducts";
+import { parseProducts } from "./app/parseProducts";
 
 export default function App() {
   const products = useSelector(showProducts);
