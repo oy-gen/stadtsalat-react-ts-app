@@ -1,19 +1,29 @@
 import Nav from "../components/Nav";
 import styled from "styled-components";
-import { Slide } from "react-slideshow-image";
+import React from "react";
+import SlideShow from "../components/Slideshow";
+import { useSelector } from "react-redux";
+import { showProducts } from "../app/dataSlice";
+import { parseImages } from "../app/parseProducts";
 
 export default function PageOne() {
+  const products = useSelector(showProducts);
+  const images = parseImages(products);
+  console.log(products);
+ console.log(images);
+
   return (
     <>
-      <Nav />
+    <Nav/>
       <MainContainer>
-        <h3>This is Page One</h3>;
+        <SlideShow images={images}/>
       </MainContainer>
     </>
   );
 }
 
 const MainContainer = styled.section`
-  max-width: 1200px;
+  width: 800px;
+  height: 500px;
   margin: 180px auto;
 `;
