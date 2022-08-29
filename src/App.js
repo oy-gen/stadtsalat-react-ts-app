@@ -1,50 +1,39 @@
 import React from "react";
 import Nav from "./components/Nav";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "./components/ProductCard";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addProducts,
-  addPaginatedProducts,
-  showProducts,
-  showPaginatedProducts,
-} from "./app/dataSlice";
-import { parseProducts, paginateParsedProducts } from "./app/parseData";
-// import fetchData from "./app/fetchData";
+import { addProducts, showProducts } from "./app/dataSlice";
+import fetchData from "./app/fetchData";
 
 export default function App() {
-  const products = useSelector(showProducts);
-  const paginatedProducts = useSelector(showPaginatedProducts);
   const dispatch = useDispatch();
+  const products = useSelector(showProducts);
+  const productsPerPage = 4;
+  const [pages, setPages] = useState(productsPerPage);
+  const shownProducts = products.slice(0, pages);
 
   useEffect(() => {
-    async function fetchData() {
-      const result = await fetch(
-        "https://api.stadtsalat.de/shop/grosse-theaterstrasse-store/"
-      );
-      const data = await result.json();
-      const parsedProducts = parseProducts(data);
-      const paginatedProducts = paginateParsedProducts(parsedProducts);
-      dispatch(addPaginatedProducts(paginatedProducts));
-      dispatch(addProducts(parsedProducts));
-    }
-    fetchData();
+    fetchData().then((products) => dispatch(addProducts(products)));
   }, [dispatch]);
-
-  console.log("products", products);
-  console.log("paginated", paginatedProducts);
 
   return (
     <>
       <Nav />
       <MainContainer>
-        {products.map((product) => (
+        {shownProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
         <ButtonWrapper>
-          {" "}
-          <Button>Load more</Button>
+          <Button
+            onClick={() => {
+              setPages(pages + productsPerPage);
+            }}
+            disabled={products.length === shownProducts.length}
+          >
+            Load more
+          </Button>
         </ButtonWrapper>
       </MainContainer>
     </>
