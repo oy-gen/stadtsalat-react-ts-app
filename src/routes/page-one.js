@@ -4,7 +4,7 @@ import React from "react";
 import SlideShow from "../components/Slideshow";
 import { useSelector } from "react-redux";
 import { showProducts } from "../app/dataSlice";
-import { parseImages } from "../app/parseProducts";
+import { parseImages } from "../app/parseData";
 
 export default function PageOne() {
   const products = useSelector(showProducts);

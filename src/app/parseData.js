@@ -4,26 +4,26 @@ export function parseProducts(data) {
       product.productTags.includes("product.salad") ||
       product.productTags.includes("product.bowl")
   );
-  const totalProducts = realProducts.map((product) => ({
+  const parsedProducts = realProducts.map((product) => ({
     ...product,
     rating: Math.floor(Math.random() * 6),
   }));
-  return totalProducts;
+  return parsedProducts;
 }
 
-export function paginateParsedProducts(data) {
-  const productsPerPage = 3;
-  const totalProducts = parseProducts(data);
+export function paginateParsedProducts(parsedProducts) {
+  const productsPerPage = 4;
 
-  function sliceIntoChunks(totalProducts, productsPerPage) {
+  function sliceIntoChunks(parsedProducts, productsPerPage) {
     const result = [];
-    for (let i = 0; i < totalProducts.length; i += productsPerPage) {
-      const chunk = totalProducts.slice(i, i + productsPerPage);
+    for (let i = 0; i < parsedProducts.length; i += productsPerPage) {
+      const chunk = parsedProducts.slice(i, i + productsPerPage);
       result.push(chunk);
     }
     return result;
   }
-  console.log(sliceIntoChunks(totalProducts, productsPerPage));
+  const productChunks = sliceIntoChunks(parsedProducts, productsPerPage);
+  return productChunks;
 }
 
 export function parseImages(products) {
