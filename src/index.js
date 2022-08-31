@@ -15,7 +15,7 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <div id="modal" />
+          <div id="modal" />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />

@@ -4,36 +4,26 @@ import { useState } from "react";
 
 export default function SlideShow({ images }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  function goToPrevious() {
-    setCurrentIndex(currentIndex - 1);
-  }
-  function goToNext() {
-    setCurrentIndex(currentIndex + 1);
-  }
+  const imageUrl = images[currentIndex].url;
 
   return (
     <>
       <ImageFrame>
         <Arrow
           className="left"
-          onClick={goToPrevious}
+          onClick={() => setCurrentIndex(currentIndex - 1)}
           disabled={currentIndex === 0}
         >
           🡨
         </Arrow>
         <Arrow
           className="right"
-          onClick={goToNext}
+          onClick={() => setCurrentIndex(currentIndex + 1)}
           disabled={currentIndex === images.length - 1}
         >
           🡪
         </Arrow>
-        <Image
-          style={{
-            backgroundImage: `url(${images[currentIndex].url})`,
-          }}
-        />
+        <Image url={imageUrl} />
         <DotWrapper>
           {images.map((image, index) => (
             <Dot
@@ -57,6 +47,7 @@ const Image = styled.div`
   background-size: cover;
   background-color: black;
   background-position: center;
+  background-image: url(${(props) => props.url});
   border-radius: 10px;
   width: 100%;
   height: 100%;
