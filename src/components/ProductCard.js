@@ -2,49 +2,50 @@ import styled from "styled-components";
 import Tags from "./Tags";
 import { ReactComponent as Like } from "../images/like.svg";
 import { ReactComponent as Location } from "../images/location.svg";
-import { useState } from "react";
 import Modal from "./Modal";
 import Stars from "./Stars";
-import { toggleLike, showLikes } from "../app/dataSlice";
+import {
+  toggleLike,
+  toggleModal,
+  selectLikes,
+  selectModal,
+} from "../app/dataSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function ProductCard({ product }) {
-  const [showModal, setShowModal] = useState(false);
-  const isLiked = useSelector(showLikes).includes(product.id);
+  const { name, id, description, rating, tags, image } = product;
+  const isLiked = useSelector(selectLikes).includes(id);
   const dispatch = useDispatch();
+  const openModal = useSelector(selectModal) === id;
 
   return (
     <>
       <StyledCard>
-        <h2>{product.name}</h2>
+        <h2>{name}</h2>
         <Image
-          src={`https://static.stadtsalat.de/shop/image/${product.image}`}
-          alt={product.name}
+          src={`https://static.stadtsalat.de/shop/image/${image}`}
+          alt={name}
         />
         <DetailWrapper>
-          <Stars rating={product.rating} />
+          <Stars rating={rating} />
         </DetailWrapper>
         <DetailWrapper>
-          <Tags tags={product.tags} />
+          <Tags tags={tags} />
         </DetailWrapper>
         <IconWrapper>
-          <Button onClick={() => setShowModal(!showModal)}>
+          <Button onClick={() => dispatch(toggleModal(id))}>
             <Location />
           </Button>
           <Button
             onClick={() => {
-              dispatch(toggleLike(product.id));
+              dispatch(toggleLike(id));
             }}
           >
             <Like fill={isLiked ? "grey" : "none"} />
           </Button>
         </IconWrapper>
       </StyledCard>
-      <Modal showModal={showModal}>
-        <h2>{product.name}</h2>
-        <Message>{product.description}</Message>
-        <button onClick={() => setShowModal(false)}>Close Modal</button>
-      </Modal>
+      {openModal && <Modal name={name} description={description} id={id} />}
     </>
   );
 }

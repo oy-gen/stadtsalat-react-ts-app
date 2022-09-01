@@ -1,21 +1,23 @@
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import fetchData from "../app/fetchData";
 import { Link } from "react-router-dom";
-import { addProducts } from "../app/dataSlice";
+import { setProducts, setImages, selectProducts } from "../app/dataSlice";
 import { Outlet } from "react-router-dom";
 import MainContainer from "./MainContainer";
-import { useSelector } from "react-redux";
-import { showProducts } from "../app/dataSlice";
 
 export default function Header() {
   const dispatch = useDispatch();
-  const products = useSelector(showProducts);
+  const products = useSelector(selectProducts);
 
   useEffect(() => {
-    fetchData().then((products) => dispatch(addProducts(products)));
+    fetchData().then((products) => dispatch(setProducts(products)));
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(setImages(products));
+  }, [products, dispatch]);
 
   return (
     <>

@@ -1,19 +1,22 @@
 import ReactDOM from "react-dom";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { toggleModal } from "../app/dataSlice";
 
-export default function Modal({ showModal, children }) {
+export default function Modal({ description, name }) {
+  const dispatch = useDispatch();
   const content = (
     <ModalUnderlay>
-      <ModalContent>{children}</ModalContent>
+      <ModalContent>
+        <h2>{name}</h2>
+        <p>{description}</p>
+        <button onClick={() => dispatch(toggleModal(false))}>
+          close modal
+        </button>
+      </ModalContent>
     </ModalUnderlay>
   );
-  return (
-    <>
-      {showModal &&
-        ReactDOM.createPortal(content, document.getElementById("modal"))}
-      ;
-    </>
-  );
+  return ReactDOM.createPortal(content, document.getElementById("modal"));
 }
 
 const ModalContent = styled.div`

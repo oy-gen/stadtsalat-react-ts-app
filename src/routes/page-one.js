@@ -1,11 +1,9 @@
 import React from "react";
 import SlideShow from "../components/Slideshow";
 import { useSelector } from "react-redux";
-import { showProducts } from "../app/dataSlice";
-import { parseImages } from "../app/parseData";
+import { selectImages } from "../app/dataSlice";
 
 export default function PageOne() {
-  const products = useSelector(showProducts);
-  const images = parseImages(products);
+  const images = useSelector(selectImages);
   return <SlideShow images={images} />;
 }

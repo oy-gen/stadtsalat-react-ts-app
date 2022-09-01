@@ -3,10 +3,10 @@ import { useState } from "react";
 import ProductCard from "./components/ProductCard";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { showProducts } from "./app/dataSlice";
+import { selectProducts } from "./app/dataSlice";
 
 export default function App() {
-  const products = useSelector(showProducts);
+  const products = useSelector(selectProducts);
   const productsPerPage = 4;
   const [pages, setPages] = useState(productsPerPage);
   const shownProducts = products.slice(0, pages);
