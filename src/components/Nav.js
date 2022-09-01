@@ -1,18 +1,37 @@
 import styled from "styled-components";
-
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import fetchData from "../app/fetchData";
 import { Link } from "react-router-dom";
+import { addProducts } from "../app/dataSlice";
+import { Outlet } from "react-router-dom";
+import MainContainer from "./MainContainer";
+import { useSelector } from "react-redux";
+import { showProducts } from "../app/dataSlice";
 
 export default function Header() {
+  const dispatch = useDispatch();
+  const products = useSelector(showProducts);
+
+  useEffect(() => {
+    fetchData().then((products) => dispatch(addProducts(products)));
+  }, [dispatch]);
+
   return (
-    <NavBar>
-      <Link to="/">
-        <Logo src="https://static.stadtsalat.de/shop/image/configurator" />
-      </Link>
-      <MenueWrapper>
-        <Link to="/page-one">PAGE ONE</Link>
-        <Link to="/page-two">PAGE TWO</Link>
-      </MenueWrapper>
-    </NavBar>
+    <>
+      <NavBar>
+        <Link to="/">
+          <Logo src="https://static.stadtsalat.de/shop/image/configurator" />
+        </Link>
+        <MenueWrapper>
+          <Link to="/page-one">PAGE ONE</Link>
+          <Link to="/page-two">PAGE TWO</Link>
+        </MenueWrapper>
+      </NavBar>
+      <MainContainer>
+        <Outlet />
+      </MainContainer>
+    </>
   );
 }
 

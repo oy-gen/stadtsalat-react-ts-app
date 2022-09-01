@@ -40,7 +40,7 @@ export default function SlideShow({ images }) {
 
 const ImageFrame = styled.div`
   position: relative;
-  height: 100%;
+  height: 600px;
 `;
 
 const Image = styled.div`
