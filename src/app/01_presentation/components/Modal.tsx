@@ -11,7 +11,7 @@ export default function Modal({ description, name, id }: any) {
       <ModalContent>
         <h2>{name}</h2>
         <p>{description}</p>
-        <button onClick={() => dispatch(toggleModal(id))}></button>
+        <button onClick={() => dispatch(toggleModal())}>close</button>
       </ModalContent>
     </ModalUnderlay>
   );

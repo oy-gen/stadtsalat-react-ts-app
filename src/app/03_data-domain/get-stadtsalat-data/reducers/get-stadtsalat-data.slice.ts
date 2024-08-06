@@ -7,12 +7,8 @@ const initialState: StadtsalatState = {
   status: LoadingStatusEnum.NOT_LOADED,
   products: [],
   likedProducts: [],
-  modalsOpen: [],
+  modalOpen: false,
 };
-
-export interface SetProductsPayload {
-  products: Product[];
-}
 
 export const getStadtsalatDataSlice = createSlice({
   name: "stadtsalatData",
@@ -22,7 +18,7 @@ export const getStadtsalatDataSlice = createSlice({
       (state = { ...state, status: LoadingStatusEnum.LOADING }),
     loadSuccessful: (
       state: StadtsalatState,
-      action: PayloadAction<SetProductsPayload>,
+      action: PayloadAction<{ products: Product[] }>,
     ) => {
       const products = action.payload.products
         .filter(
@@ -50,22 +46,20 @@ export const getStadtsalatDataSlice = createSlice({
       status: LoadingStatusEnum.LOAD_FAILED,
     }),
     toggleLike: (state: StadtsalatState, action: PayloadAction<string>) => {
-      const likedProducts = state.likedProducts;
-      if (likedProducts.includes(action.payload)) {
-        likedProducts.filter((productId) => productId !== action.payload);
+      if (state.likedProducts.includes(action.payload)) {
+        const filteredProductIds: string[] = state.likedProducts.filter(
+          (productId) => productId !== action.payload,
+        );
+        return { ...state, likedProducts: filteredProductIds };
       } else {
-        likedProducts.push(action.payload);
+        return {
+          ...state,
+          likedProducts: [...state.likedProducts, action.payload],
+        };
       }
-      state.likedProducts = likedProducts;
     },
-    toggleModal: (state, action: PayloadAction<string>) => {
-      const modalOpen: string[] = state.modalsOpen;
-      if (modalOpen.includes(action.payload)) {
-        modalOpen.filter((productId) => productId !== action.payload);
-      } else {
-        modalOpen.push(action.payload);
-      }
-      state.likedProducts = modalOpen;
+    toggleModal: (state: StadtsalatState) => {
+      state.modalOpen = !state.modalOpen;
     },
   },
 });

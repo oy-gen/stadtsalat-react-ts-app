@@ -1,8 +1,8 @@
 import React from "react";
 import SlideShow from "../components/Slideshow";
 import { useSelector } from "react-redux";
-import { Image } from "../../03_data-domain/get-stadtsalat-data/models/product-model";
 import { selectImages } from "../../02_business-domain/product-selectors.selector";
+import { Image } from "../../02_business-domain/product.model";
 
 export default function PageOne() {
   const images: Image[] = useSelector(selectImages);

@@ -12,7 +12,7 @@ export interface StadtsalatState {
   status: LoadingStatusEnum;
   products: Product[];
   likedProducts: string[];
-  modalsOpen: string[];
+  modalOpen: boolean;
 }
 
 export interface StadtsalatDataStateAware {

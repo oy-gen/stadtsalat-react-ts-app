@@ -9,7 +9,6 @@ export default function Nav() {
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    console.log(dispatch(fetchData()));
     dispatch(fetchData());
   }, [dispatch]);
 

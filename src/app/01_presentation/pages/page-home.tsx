@@ -1,10 +1,9 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import ProductCard from "../components/ProductCard";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { Product } from "../../03_data-domain/get-stadtsalat-data/models/product-model";
 import { selectProducts } from "../../02_business-domain/product-selectors.selector";
+import { Product } from "../../02_business-domain/product.model";
 
 export default function PageHome() {
   const products: Product[] = useSelector(selectProducts);

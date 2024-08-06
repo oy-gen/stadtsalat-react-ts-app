@@ -25,7 +25,9 @@ export const selectIsProductLiked = (id: string) =>
     return stadtsalatData && stadtsalatData.likedProducts.includes(id);
   });
 
-export const selectIsModalOpen = (id: string) =>
-  createSelector([selectStadtsalatData], (stadtsalatData) => {
-    return stadtsalatData && stadtsalatData.modalsOpen.includes(id);
-  });
+export const selectIsModalOpen = createSelector(
+  [selectStadtsalatData],
+  (stadtsalatData) => {
+    return stadtsalatData && stadtsalatData.modalOpen;
+  },
+);

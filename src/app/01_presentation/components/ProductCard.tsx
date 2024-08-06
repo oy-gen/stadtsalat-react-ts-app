@@ -9,7 +9,6 @@ import Stars from "./Stars";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { Product } from "../../03_data-domain/get-stadtsalat-data/models/product-model";
 import {
   toggleLike,
   toggleModal,
@@ -18,12 +17,12 @@ import {
   selectIsModalOpen,
   selectIsProductLiked,
 } from "../../02_business-domain/product-selectors.selector";
+import { Product } from "../../02_business-domain/product.model";
 
 export default function ProductCard({ product }: { product: Product }) {
   const isLiked: boolean =
     useSelector(selectIsProductLiked(product.id)) ?? false;
-  const openModal: boolean =
-    useSelector(selectIsModalOpen(product.id)) ?? false;
+  const openModal: boolean = useSelector(selectIsModalOpen) ?? false;
   const dispatch = useDispatch();
 
   return (
@@ -38,7 +37,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <Tags tags={product.tags} />
         </DetailWrapper>
         <IconWrapper>
-          <Button onClick={() => dispatch(toggleModal(product.id))}>
+          <Button onClick={() => dispatch(toggleModal())}>
             <Location />
           </Button>
           <Button
@@ -98,11 +97,4 @@ const Image = styled.img`
   grid-column: 2/3;
   grid-row: 1/4;
   width: 200px;
-`;
-
-const Message = styled.p`
-  font-size: 1rem;
-  font-weight: 400;
-  padding: 1rem 1rem;
-  text-align: center;
 `;

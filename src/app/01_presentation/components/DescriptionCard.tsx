@@ -1,19 +1,19 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { Product } from "../../02_business-domain/product.model";
 
-export default function DescriptionCard({ product }: any) {
-  const { name, description } = product;
+export default function DescriptionCard({ product }: { product: Product }) {
   const [openInfo, setOpenInfo] = useState(false);
 
   return (
     <>
       <TitleWrapper>
-        <h2>{name}</h2>
+        <h2>{product.name}</h2>
         <button onClick={() => setOpenInfo(!openInfo)}>
           {openInfo ? "close" : "show more info"}{" "}
         </button>
       </TitleWrapper>
-      {openInfo && <InfoWrapper>{description}</InfoWrapper>}
+      {openInfo && <InfoWrapper>{product.description}</InfoWrapper>}
     </>
   );
 }
