@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 
-export default function DescriptionCard({ product }) {
+export default function DescriptionCard({ product }: any) {
   const { name, description } = product;
   const [openInfo, setOpenInfo] = useState(false);
 

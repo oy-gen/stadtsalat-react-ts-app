@@ -1,24 +1,26 @@
 import React from "react";
 import { useState } from "react";
-import ProductCard from "./components/ProductCard";
+import ProductCard from "../components/ProductCard";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { selectProducts } from "./app/dataSlice";
+import { Product } from "../../03_data-domain/get-stadtsalat-data/models/product-model";
+import { selectProducts } from "../../02_business-domain/product-selectors.selector";
 
-export default function App() {
-  const products = useSelector(selectProducts);
+export default function PageHome() {
+  const products: Product[] = useSelector(selectProducts);
   const productsPerPage = 4;
-  const [pages, setPages] = useState(productsPerPage);
-  const shownProducts = products.slice(0, pages);
+  const [amountOfProductsToShow, setAmountOfProductsToShow] =
+    useState(productsPerPage);
+  const shownProducts = products.slice(0, amountOfProductsToShow);
   return (
     <>
-      {shownProducts.map((product) => (
+      {shownProducts.map((product: Product) => (
         <ProductCard key={product.id} product={product} />
       ))}
       <ButtonWrapper>
         <Button
           onClick={() => {
-            setPages(pages + productsPerPage);
+            setAmountOfProductsToShow(amountOfProductsToShow + productsPerPage);
           }}
           disabled={products.length === shownProducts.length}
         >

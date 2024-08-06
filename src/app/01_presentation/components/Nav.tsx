@@ -1,23 +1,17 @@
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import fetchData from "../app/fetchData";
-import { Link } from "react-router-dom";
-import { setProducts, setImages, selectProducts } from "../app/dataSlice";
-import { Outlet } from "react-router-dom";
-import MainContainer from "./MainContainer";
+import { Link, Outlet } from "react-router-dom";
+import { fetchData } from "../../03_data-domain/get-stadtsalat-data/fetch/get-stadtsalat-data.async-thunk";
+import { AppDispatch } from "../../03_data-domain/store";
 
-export default function Header() {
-  const dispatch = useDispatch();
-  const products = useSelector(selectProducts);
+export default function Nav() {
+  const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    fetchData().then((products) => dispatch(setProducts(products)));
+    console.log(dispatch(fetchData()));
+    dispatch(fetchData());
   }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(setImages(products));
-  }, [products, dispatch]);
 
   return (
     <>
@@ -58,5 +52,9 @@ const MenueWrapper = styled.div`
 
 const Logo = styled.img`
   height: 80px;
-  width: 80px; ;
+  width: 80px;
+`;
+
+const MainContainer = styled.div`
+  padding: 20px;
 `;
