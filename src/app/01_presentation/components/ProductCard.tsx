@@ -1,51 +1,61 @@
 import styled from "styled-components";
 import Tags from "./Tags";
+// @ts-ignore
 import { ReactComponent as Like } from "../images/like.svg";
+// @ts-ignore
 import { ReactComponent as Location } from "../images/location.svg";
 import Modal from "./Modal";
 import Stars from "./Stars";
+
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   toggleLike,
   toggleModal,
-  selectLikes,
-  selectModal,
-} from "../app/dataSlice";
-import { useSelector, useDispatch } from "react-redux";
+} from "../../03_data-domain/get-stadtsalat-data/reducers/get-stadtsalat-data.slice";
+import {
+  selectIsModalOpen,
+  selectIsProductLiked,
+} from "../../02_business-domain/product-selectors.selector";
+import { Product } from "../../02_business-domain/product.model";
 
-export default function ProductCard({ product }) {
-  const { name, id, description, rating, tags, image } = product;
-  const isLiked = useSelector(selectLikes).includes(id);
+export default function ProductCard({ product }: { product: Product }) {
+  const isLiked: boolean =
+    useSelector(selectIsProductLiked(product.id)) ?? false;
+  const openModal: boolean = useSelector(selectIsModalOpen) ?? false;
   const dispatch = useDispatch();
-  const openModal = useSelector(selectModal) === id;
 
   return (
     <>
       <StyledCard>
-        <h2>{name}</h2>
-        <Image
-          src={`https://static.stadtsalat.de/shop/image/${image}`}
-          alt={name}
-        />
+        <h2>{product.name}</h2>
+        <Image src={product.image.url} alt={product.name} />
         <DetailWrapper>
-          <Stars rating={rating} />
+          <Stars rating={product.rating} />
         </DetailWrapper>
         <DetailWrapper>
-          <Tags tags={tags} />
+          <Tags tags={product.tags} />
         </DetailWrapper>
         <IconWrapper>
-          <Button onClick={() => dispatch(toggleModal(id))}>
+          <Button onClick={() => dispatch(toggleModal())}>
             <Location />
           </Button>
           <Button
             onClick={() => {
-              dispatch(toggleLike(id));
+              dispatch(toggleLike(product.id));
             }}
           >
             <Like fill={isLiked ? "grey" : "none"} />
           </Button>
         </IconWrapper>
       </StyledCard>
-      {openModal && <Modal name={name} description={description} id={id} />}
+      {openModal && (
+        <Modal
+          name={product.name}
+          description={product.description}
+          id={product.id}
+        />
+      )}
     </>
   );
 }
@@ -55,7 +65,7 @@ const StyledCard = styled.div`
   grid-template-columns: 5fr 3fr 1fr;
   border-radius: 10px;
   background-color: hsl(0, 0%, 94%);
-  box-shadow: 0px 0px 28px 11px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 28px 11px rgba(0, 0, 0, 0.2);
   margin: 20px;
   padding: 40px;
 `;
@@ -87,11 +97,4 @@ const Image = styled.img`
   grid-column: 2/3;
   grid-row: 1/4;
   width: 200px;
-`;
-
-const Message = styled.p`
-  font-size: 1rem;
-  font-weight: 400;
-  padding: 1rem 1rem;
-  text-align: center;
 `;

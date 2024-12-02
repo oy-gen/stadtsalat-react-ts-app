@@ -1,10 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
+import { Image } from "../../03_data-domain/get-stadtsalat-data/models/product-model";
 
-export default function SlideShow({ images }) {
+type DotProps = {
+  currentPic: boolean;
+};
+
+export default function SlideShow({ images }: { images: Image[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const imageUrl = images[currentIndex].url;
+  const imageUrl: string = images[currentIndex].url;
 
   return (
     <>
@@ -14,16 +19,16 @@ export default function SlideShow({ images }) {
           onClick={() => setCurrentIndex(currentIndex - 1)}
           disabled={currentIndex === 0}
         >
-          🡨
+          left
         </Arrow>
         <Arrow
           className="right"
           onClick={() => setCurrentIndex(currentIndex + 1)}
           disabled={currentIndex === images.length - 1}
         >
-          🡪
+          right
         </Arrow>
-        <Image url={imageUrl} />
+        <Photo url={imageUrl} />
         <DotWrapper>
           {images.map((image, index) => (
             <Dot
@@ -43,7 +48,7 @@ const ImageFrame = styled.div`
   height: 600px;
 `;
 
-const Image = styled.div`
+const Photo = styled.div<{ url: string }>`
   background-size: cover;
   background-color: black;
   background-position: center;
@@ -60,7 +65,7 @@ const DotWrapper = styled.div`
   gap: 10px;
 `;
 
-const Dot = styled.button`
+const Dot = styled.button<DotProps>`
   border-style: none;
   border-radius: 100%;
   width: 20px;
